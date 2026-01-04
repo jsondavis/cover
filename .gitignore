@@ -22,6 +22,10 @@ Homestead.json
 /.vagrant
 .phpunit.result.cache
 
+/certs
+/logs
+/data
+/secrets
 /public/build
 /storage/pail
 /mysql-data
