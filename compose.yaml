@@ -5,9 +5,21 @@ services:
     image: php:8-apache
     container_name: php-apache-container
     ports:
-      - "8080:80"
+      - "8081:80"
     volumes:
       - .:/var/www/html
+
+  slim:
+    image: php:8-alpine
+    working_dir: /var/www
+    command: php -S 0.0.0.0:8080 -t public
+    environment:
+      - docker=true
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/var/www
+      - ./logs:/var/www/logs
 
   postgres:
     container_name: posty

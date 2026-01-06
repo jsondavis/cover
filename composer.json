@@ -1,0 +1,19 @@
+{
+    "name": "jsondavis/cover",
+    "type": "projec",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Jsondavis\\Cover\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "jsondavis"
+        }
+    ],
+    "require": {
+        "slim/slim": "4.*",
+        "slim/psr7": "^1.8"
+    }
+}

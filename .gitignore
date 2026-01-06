@@ -3,6 +3,14 @@ node_modules/
 npm-debug.log
 yarn-error.log
 
+# from Slim
+.idea/
+.vscode/
+/coverage/
+/logs/*
+!/logs/README.md
+.phpunit.result.cache
+
 # Laravel 4 specific
 bootstrap/compiled.php
 app/storage/
