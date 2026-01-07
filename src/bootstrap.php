@@ -1,12 +1,23 @@
 <?php
 // bootstrap
 
-# use Psr\Http\Message\ResponseInterface as Response;
-# use Psr\Http\Message\ServerRequestInterface as Request;
-# use Slim\Factory\AppFactory;
-# 
-# use Doctrine\DBAL\DriverManager;
-# use Doctrine\ORM\EntityManager;
-# use Doctrine\ORM\ORMSetup;
+require __DIR__ . '/../vendor/autoload.php';
 
-# require __DIR__ . '/../vendor/autoload.php';
+## Get ENV data
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->safeLoad();
+$dotenv->required([
+  'DB_HOST', 
+  'DB_NAME', 
+  'DB_USER', 
+  'DB_PASS', 
+  'SSL_MODE'
+]);
+
+
+$isDev = $_ENV['APP_ENV'] == 'dev'; 
+
+## Configure DB Connection
+require_once __DIR__ . '/dbconfig.php';
+
+

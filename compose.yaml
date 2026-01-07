@@ -3,11 +3,14 @@ services:
   # Apache and PHP service
   web:
     image: php:8-apache
-    container_name: php-apache-container
+    container_name: php-apache
     ports:
       - "8081:80"
     volumes:
       - .:/var/www/html
+      - ./php.ini-dev:/usr/local/etc/php.ini-development
+      - ./php.ini-dev:/usr/local/etc/php.ini
+      - ./php.ini-prod:/usr/local/etc/php.ini-production
 
   slim:
     image: php:8-alpine
