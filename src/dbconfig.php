@@ -12,17 +12,18 @@ $config = ORMSetup::createAttributeMetadataConfig(
 
 $connection_info = [
   'driver' => 'pdo_pgsql',
-  'host' => $_ENV['DB_HOST'],
+  // 'host' => $_ENV['DB_HOST'],
+  'host' => 'posty',
   'dbname' => $_ENV['DB_NAME'],
   'user' => $_ENV['DB_USER'],
   'password' => $_ENV['DB_PASS'],
-  'sslmode' => $_ENV['SSL_MODE'],
+//   'sslmode' => $_ENV['SSL_MODE'],
 ];
 
 $conn = DriverManager::getConnection($connection_info);
 
 
-$resultSet = $conn->executeQuery('SELECT * FROM roles');
+$resultSet = $conn->executeQuery('SELECT * FROM valid_jobroles');
 $allowed_roles = $resultSet->fetchAssociative();
 
 var_dump($allowed_roles);

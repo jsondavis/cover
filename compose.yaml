@@ -1,19 +1,22 @@
 ---
 services:
   # Apache and PHP service
-  web:
-    image: php:8-apache
-    container_name: php-apache
-    ports:
-      - "8081:80"
-    volumes:
-      - .:/var/www/html
-      - ./php.ini-dev:/usr/local/etc/php.ini-development
-      - ./php.ini-dev:/usr/local/etc/php.ini
-      - ./php.ini-prod:/usr/local/etc/php.ini-production
+  # web:
+  #   image: php:8-apache
+  #   container_name: php-apache
+  #   ports:
+  #     - "8081:80"
+  #   volumes:
+  #     - .:/var/www/html
+  #     - ./php.ini-dev:/usr/local/etc/php.ini-development
+  #     - ./php.ini-dev:/usr/local/etc/php.ini
+  #     - ./php.ini-prod:/usr/local/etc/php.ini-production
 
-  slim:
-    image: php:8-alpine
+  web:
+    # image: php:8-alpine
+    build:
+      context: .
+      dockerfile: PhpAlpine.Dockerfile
     working_dir: /var/www
     command: php -S 0.0.0.0:8080 -t public
     environment:
@@ -23,6 +26,8 @@ services:
     volumes:
       - .:/var/www
       - ./logs:/var/www/logs
+    networks:
+      - app-network
 
   postgres:
     container_name: posty
