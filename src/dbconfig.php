@@ -23,8 +23,8 @@ $connection_info = [
 $conn = DriverManager::getConnection($connection_info);
 
 
-$resultSet = $conn->executeQuery('SELECT * FROM valid_jobroles');
-$allowed_roles = $resultSet->fetchAssociative();
+// $resultSet = $conn->executeQuery('SELECT * FROM valid_jobroles');
+// $allowed_roles = $resultSet->fetchAssociative();
 
-var_dump($allowed_roles);
+// var_dump($allowed_roles);
 
