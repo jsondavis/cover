@@ -22,6 +22,8 @@ $connection_info = [
 
 $conn = DriverManager::getConnection($connection_info);
 
+$entityMgr = new EntityManager($conn, $config);
+
 
 // $resultSet = $conn->executeQuery('SELECT * FROM valid_jobroles');
 // $allowed_roles = $resultSet->fetchAssociative();
