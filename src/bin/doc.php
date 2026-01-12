@@ -1,4 +1,5 @@
 #!/usr/bin/env php
+
 <?php
 // bin/doc
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
@@ -10,6 +11,6 @@ require __DIR__ . '/../dbconfig.php';
 
 
 ConsoleRunner::run(
-    new SingleManagerProvider($entityManager)
+    new SingleManagerProvider($entityMgr)
 );
 
