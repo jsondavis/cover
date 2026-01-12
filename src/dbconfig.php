@@ -9,7 +9,8 @@ use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
 // TODO: alter these later for prod deploy
 $isDev = true;
-$driverImpl = new AttributeDriver([__DIR__ . '/../src/Entities']);
+$entityDir = __DIR__ . '/entities';
+$driverImpl = new AttributeDriver([$entityDir]);
 $queryCache = new ArrayAdapter();
 $metadataCache = new ArrayAdapter();
 
