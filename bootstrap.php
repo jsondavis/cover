@@ -1,10 +1,12 @@
 <?php
 // bootstrap
 
-require __DIR__ . '/../vendor/autoload.php';
+declare(strict_types=1);
+
+require __DIR__ . '/vendor/autoload.php';
 
 ## Get ENV data
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 $dotenv->required([
   'DB_HOST', 
@@ -18,6 +20,6 @@ $dotenv->required([
 $isDev = $_ENV['APP_ENV'] == 'dev'; 
 
 ## Configure DB Connection
-require_once __DIR__ . '/dbconfig.php';
+require_once __DIR__ . '/src/dbconfig.php';
 
 

@@ -5,9 +5,9 @@
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
 use Doctrine\ORM\Tools\Console\EntityManagerProvider\SingleManagerProvider;
 
-// Adjust this path to your actual bootstrap.php
+// db connection handled in bootstrap
 require __DIR__ . '/../bootstrap.php';
-require __DIR__ . '/../dbconfig.php';
+// require __DIR__ . '/../src/dbconfig.php';
 
 
 ConsoleRunner::run(
