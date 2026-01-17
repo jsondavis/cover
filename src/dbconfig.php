@@ -4,20 +4,25 @@ use Doctrine\ORM\Configuration;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\ORMSetup;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
 // TODO: alter these later for prod deploy
 $isDev = true;
-$entityDir = __DIR__ . '/entities';
+// $entityDir = __DIR__ . '/entities';
+$entityDir = '/var/www/src/entities';
+
+// var_dump($entityDir);
+
+
 $driverImpl = new AttributeDriver([$entityDir]);
 $queryCache = new ArrayAdapter();
 $metadataCache = new ArrayAdapter();
 
 
 $config = new Configuration;
-$config->setMetadataCache($metadataCache);
+// $config->setAnnotationDriver
 $config->setMetadataDriverImpl($driverImpl);
+$config->setMetadataCache($metadataCache);
 $config->setQueryCache($queryCache);
 
 $proxyDir = 'data/DoctrineORMModule/Proxy';
@@ -25,11 +30,6 @@ $proxyDir = 'data/DoctrineORMModule/Proxy';
 $config->setProxyDir(__DIR__ . '/../'  . $proxyDir);
 $config->setProxyNamespace('Proxies');
 
-// $config = ORMSetup::createAttributeMetadataConfig(
-//   paths: [__DIR__ . '/../src'],
-//   isDevMode: $isDev,
-//   
-// );
 
 $postgres_info = [
   'driver' => 'pdo_pgsql',
