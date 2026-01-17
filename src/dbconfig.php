@@ -8,6 +8,7 @@ use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
 // TODO: alter these later for prod deploy
 $isDev = true;
+
 // $entityDir = __DIR__ . '/entities';
 $entityDir = '/var/www/src/entities';
 
