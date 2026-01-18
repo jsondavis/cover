@@ -9,8 +9,8 @@ use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\GeneratedValue;
 
 
-#[Entitiy, Table(name: 'jobrole')]
-final readonly class JobRole
+#[Entitiy, Table(name: 'account')]
+final readonly class Account
 {
   #[Id, Column(type: 'integer'), GeneratedValue(strategy: 'AUTO')]
   private int $id;
