@@ -7,20 +7,27 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\DBAL\Types\Types;
 
 
-#[Entitiy, Table(name: 'account')]
-final readonly class Account
+#[Entitiy]
+class Account
 {
-  #[Id, Column(type: 'integer'), GeneratedValue(strategy: 'AUTO')]
+  #[Id] 
+  #[Column(type: Types::INTEGER)] 
+  #[GeneratedValue(strategy: 'AUTO')]
   private int $id;
 
-  #[Column(type: 'string', unique: true, nullable: false)]
-  private string $rolename;
+  #[Column(type: 'string')]
+  private string $first_name;
 
-  public function __construct(string $rolename)
+  #[Column(type: 'string')]
+  private string $last_name;
+
+  public function __construct(string $first_name, string $last_name)
   {
-    $this->rolename = $rolename;
+    $this->first_name = $first_name;
+    $this->last_name = $last_name;
   }
 
   public function getId(): int
@@ -28,9 +35,9 @@ final readonly class Account
     return $this->id;
   }
 
-  public function getRolename(): string
+  public function getName(): string
   {
-    return $this->rolename;
+    return $this->first_name . ' ' . $this->last_name;
   }
 
   /**
@@ -40,7 +47,7 @@ final readonly class Account
   {
     return [
       'id' => $this->getId(),
-      'getRolename' => $this->getRolename()
+      'name' => $this->getName()
     ];
   }
 }
