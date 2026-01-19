@@ -10,7 +10,7 @@ use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 
 $isDev = true;
-$entityDir = '/var/www/src/entities';
+$entityDirs = [__DIR__ . '/Entities/'];
 $proxyDir = 'data/DoctrineORMModule/Proxy';
 
 $postgres_info = [
@@ -29,7 +29,7 @@ $queryCache = $isDev ?
 
 
 $config = ORMSetup::createAttributeMetadataConfiguration(
-  [$entityDir], // metadata_dirs
+  $entityDirs, // metadata_dirs
   $isDev, // dev_mode
   null, //not sure what this is
   $queryCache
