@@ -8,8 +8,31 @@
     <!-- <link rel="stylesheet" href="style.css"> -->
   </head>
   <body>
-    testing 123
-    <!-- <script src="index.js"></script> -->
+    <div id="app">
+      <!-- the application will be rendered here -->
+    </div>
+
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.production.min.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+    ></script>
+
+    <script type="module">
+      import htm from "https://unpkg.com/htm?module";
+      const html = htm.bind(React.createElement);
+      const app = document.getElementById('app');
+
+      // import App from "./App.js";
+      ReactDOM.render(html`
+        <div>
+          testing 123 asdf
+        </div>
+      `, app);
+    </script>
   </body>
 </html>
 
