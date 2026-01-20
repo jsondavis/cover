@@ -26,10 +26,14 @@ class Account
   #[Column(type: 'string')]
   private string $last_name;
 
-  public function __construct(string $first_name, string $last_name)
+  #[Column(type: 'string', unique: true, nullable: false)]
+  private string $email;
+
+  public function __construct(string $first_name, string $last_name, string $email)
   {
     $this->first_name = $first_name;
     $this->last_name = $last_name;
+    $this->email = $email;
   }
 
   public function getId(): int
@@ -42,6 +46,11 @@ class Account
     return $this->first_name . ' ' . $this->last_name;
   }
 
+  public function getEmail(): string
+  {
+    return $this->email;
+  }
+
   /**
    * {@inheritdoc}
    */
@@ -49,7 +58,8 @@ class Account
   {
     return [
       'id' => $this->getId(),
-      'name' => $this->getName()
+      'name' => $this->getName(),
+      'email' => $this->email
     ];
   }
 }
