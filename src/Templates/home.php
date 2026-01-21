@@ -6,21 +6,46 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Cover</title>
     <!-- <link rel="stylesheet" href="style.css"> -->
+
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+
+    <!-- CSS Reset -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+
+    <!-- Milligram CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
   </head>
   <body>
-    <div id="app">
-      <!-- the application will be rendered here -->
+    <div class="container">
+      <div id="shifts" class="container">
+        <h2>Shifts</h2>
+        <hr />
+        <ul>
+          <li>
+            Monday Jan 26 (9am - 2pm) | <span>1 lead</span> <span>1 helper</span>
+          </li>
+          <li>
+            Tuesday Jan 27 (9am - 12:30pm) | <span>1 lead</span> <span>1 helper</span>
+          </li>
+        </ul>
+      </div>
     </div>
 
+    <!-- 
     <script
       crossorigin
       src="https://unpkg.com/react@18/umd/react.production.min.js"
-    ></script>
+    ></script> 
+    -->
+    <!-- 
     <script
       crossorigin
       src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
-    ></script>
+    ></script> 
+    -->
 
+    <!-- 
     <script type="module">
       import htm from "https://unpkg.com/htm?module";
       const html = htm.bind(React.createElement);
@@ -28,11 +53,12 @@
 
       // import App from "./App.js";
       ReactDOM.render(html`
-        <div>
-          testing 123 asdf
+        <div class="container">
+
         </div>
       `, app);
-    </script>
+    </script> 
+    -->
   </body>
 </html>
 
