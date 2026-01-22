@@ -17,7 +17,7 @@ final readonly class JobRole
 {
   #[Id] 
   #[Column(type: 'integer'), GeneratedValue(strategy: 'AUTO')]
-  private int $id;
+  private int $role_id;
 
   #[Column(type: 'string', unique: true, nullable: false)]
   private string $rolename;
@@ -29,7 +29,7 @@ final readonly class JobRole
 
   public function getId(): int
   {
-    return $this->id;
+    return $this->role_id;
   }
 
   public function getRolename(): string
@@ -43,7 +43,7 @@ final readonly class JobRole
   public function jsonSerialize(): array
   {
     return [
-      'id' => $this->getId(),
+      'role_id' => $this->getId(),
       'getRolename' => $this->getRolename()
     ];
   }
