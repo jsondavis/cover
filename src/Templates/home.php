@@ -42,54 +42,7 @@
       </div>
     </div>
 
-    <script>
-async function getData() {
-  const baseApiUrl = 'http://localhost:8080';
-  const apiUrl = `${baseApiUrl}/account`;
-  try {
-    const response = await fetch(apiUrl);
-    if (!response.ok) {
-      console.log(response);
-      throw new Error(`Response status: ${response.status}`);
-    }
-
-    const result = await response.json();
-    console.log(result);
-  } catch (error) {
-    console.error(error.message);
-  }
-}
-
-getData();
-    </script>
-
-    <!-- 
-    <script
-      crossorigin
-      src="https://unpkg.com/react@18/umd/react.production.min.js"
-    ></script> 
-    -->
-    <!-- 
-    <script
-      crossorigin
-      src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
-    ></script> 
-    -->
-
-    <!-- 
-    <script type="module">
-      import htm from "https://unpkg.com/htm?module";
-      const html = htm.bind(React.createElement);
-      const app = document.getElementById('app');
-
-      // import App from "./App.js";
-      ReactDOM.render(html`
-        <div class="container">
-
-        </div>
-      `, app);
-    </script> 
-    -->
+    <script type="module" src="/js/index.js"></script>
   </body>
 </html>
 
