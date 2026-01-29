@@ -15,13 +15,23 @@ $app->get('/hello', function (Request $request, Response $response, $args) {
 });
 
 $app->get('/account', function (Request $request, Response $response, $args) {
-    $response->getBody()->write('account');
-    return $response;
+    $data = ['name' => 'testing name', 'email' => 'test@test.com'];
+    $payload = json_encode($data);
+
+    $response->getBody()->write($payload);
+    return $response
+      ->withHeader('Content-Type', 'application/json')
+      ->withStatus(200);
 });
 
 $app->get('/accountrole', function (Request $request, Response $response, $args) {
-    $response->getBody()->write('accountrole');
-    return $response;
+    $data = ['role' => ['lead', 'helper', 'driver']];
+    $payload = json_encode($data);
+
+    $response->getBody()->write($payload);
+    return $response
+      ->withHeader('Content-Type', 'application/json')
+      ->withStatus(200);
 });
 
 $app->get('/', function (Request $request, Response $response, $args) {

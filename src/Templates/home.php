@@ -30,7 +30,38 @@
           </li>
         </ul>
       </div>
+
+      <div id="workers" class="container">
+        <h2>Workers</h2>
+        <hr />
+        <ul>
+          <li>
+            {Name} | <span>{email}</span>
+          </li>
+        </ul>
+      </div>
     </div>
+
+    <script>
+async function getData() {
+  const baseApiUrl = 'http://localhost:8080';
+  const apiUrl = `${baseApiUrl}/account`;
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      console.log(response);
+      throw new Error(`Response status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log(result);
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+getData();
+    </script>
 
     <!-- 
     <script
