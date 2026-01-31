@@ -24,10 +24,20 @@ const getData = (input) => {
   return Command(cmdApiCall, next);
 };
 
+const getUserListItemHtml = (user) => {
+  return `${user.name} | <span>${user.email}</span>`;
+};
+
 const writePageData = (dataWrapper) => {
 
   const ul = document.querySelector('#workers ul');
+  let userList = '';
 
+  for (let user of dataWrapper.value) {
+    userList += getUserListItemHtml(user);
+  }
+
+  ul.innerHTML = userList;
 
   return Success(dataWrapper.value);
 }

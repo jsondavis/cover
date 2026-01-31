@@ -15,7 +15,9 @@ $app->get('/hello', function (Request $request, Response $response, $args) {
 });
 
 $app->get('/account', function (Request $request, Response $response, $args) {
-    $data = ['name' => 'testing name', 'email' => 'test@test.com'];
+    $data = [
+      ['name' => 'testing name', 'email' => 'test@test.com']
+    ];
     $payload = json_encode($data);
 
     $response->getBody()->write($payload);
