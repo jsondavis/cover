@@ -25,10 +25,10 @@ const getData = (input) => {
 };
 
 const getUserListItemHtml = (user) => {
-  return `${user.name} | <span>${user.email}</span>`;
+  return `<li>${user.name} | <span>${user.email}</span></li>`;
 };
 
-const writePageData = (dataWrapper) => {
+const writeWorkerPageData = (dataWrapper) => {
 
   const ul = document.querySelector('#workers ul');
   let userList = '';
@@ -42,12 +42,12 @@ const writePageData = (dataWrapper) => {
   return Success(dataWrapper.value);
 }
 
-const writeData = (input) => {
+const writeWorkerData = (input) => {
   if (input.type !== 'Success') {
     return input;
   }
 
-  const writeDataCall = () => writePageData(input);
+  const writeDataCall = () => writeWorkerPageData(input);
   const next = (data) => Success(data);
 
   return Command(writeDataCall, next);
@@ -55,8 +55,7 @@ const writeData = (input) => {
 
 const getUserDataFlow = (input) => effectPipe(
     getData,
-    writeData
-  // add function for writing data to page
+    writeWorkerData
   )(input);
     
 async function loadWorkerData() {
@@ -75,3 +74,60 @@ async function loadWorkerData() {
 loadWorkerData();
 
 
+const getShiftListItemHtml = ({date, crew_start, required_roles}) => {
+  let html = '<li>'
+  html += `${date} | <span>${crew_start}</span>`;
+  html += `<ul>`;
+  html += `<li>lead: ${required_roles.lead}</li>`;
+  html += `<li>helper: ${required_roles.helper}</li>`;
+  html += `</ul>`;
+  html += '</li>';
+  return html;
+};
+
+const writeShiftPageData = (dataWrapper) => {
+
+  const ul = document.querySelector('#shifts ul');
+  let shiftsList = '';
+
+  for (let shift of dataWrapper.value) {
+    shiftsList += getShiftListItemHtml(shift);
+  }
+
+  ul.innerHTML = shiftsList;
+
+  return Success(dataWrapper.value);
+}
+
+const writeShiftData = (input) => {
+  if (input.type !== 'Success') {
+    return input;
+  }
+
+  const writeDataCall = () => writeShiftPageData(input);
+  const next = (data) => Success(data);
+
+  return Command(writeDataCall, next);
+};
+
+
+
+const getShiftDataFlow = (input) => effectPipe(
+    getData,
+    writeShiftData
+  )(input);
+
+async function loadShiftData() {
+  const logic = getShiftDataFlow({endpoint: 'shift' });
+  const result = await runEffect(logic);
+
+  if (result.type === 'Success') {
+    console.log('Success:', result.value);
+  } 
+
+  if (result.type !== 'Success') {
+    console.error('Error:', result.error);
+  }
+}
+
+loadShiftData();

@@ -36,6 +36,23 @@ $app->get('/accountrole', function (Request $request, Response $response, $args)
       ->withStatus(200);
 });
 
+$app->get('/shift', function (Request $request, Response $response, $args) {
+    $data = [
+      [
+        'id' => '12323', 'date' => date('Y-m-d'), 'crew_start' => date('H:i:s'),
+        'required_roles' => [
+          'lead' => 1, 'helper' => 2
+        ]
+      ]
+    ];
+    $payload = json_encode($data);
+
+    $response->getBody()->write($payload);
+    return $response
+      ->withHeader('Content-Type', 'application/json')
+      ->withStatus(200);
+});
+
 $app->get('/', function (Request $request, Response $response, $args) {
   $renderer = new PhpRenderer(__DIR__ . '/Templates');
   return $renderer->render($response, 'home.php', []);
