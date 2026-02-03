@@ -7,7 +7,14 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
 use Slim\Views\PhpRenderer;
 
+// use Cover\Entities\Account;
+// use Cover\Entities\Shift;
+
 $app = AppFactory::create();
+
+// echo "<pre>";
+// var_dump($entityMgr);
+// echo "</pre>";
 
 $app->get('/hello', function (Request $request, Response $response, $args) {
     $response->getBody()->write('Hello world!');
@@ -15,10 +22,16 @@ $app->get('/hello', function (Request $request, Response $response, $args) {
 });
 
 $app->get('/account', function (Request $request, Response $response, $args) {
+    
+    $acct_result = $conn->executeQuery('SELECT * FROM account');
+    $results = $acct_result->fetchAssociative();
+
+
     $data = [
       ['name' => 'testing name', 'email' => 'test@test.com']
     ];
-    $payload = json_encode($data);
+    // $payload = json_encode($data);
+    $payload = json_encode($results);
 
     $response->getBody()->write($payload);
     return $response
