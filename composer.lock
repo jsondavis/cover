@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fd261f5a28d0e6b144bd802ad66552e3",
+    "content-hash": "52937d83a690657a2b627d32cf39a71b",
     "packages": [
         {
             "name": "doctrine/collections",
@@ -3014,6 +3014,50 @@
                 }
             ],
             "time": "2025-09-11T10:15:23+00:00"
+        },
+        {
+            "name": "uma/dic",
+            "version": "v4.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/1ma/DIC.git",
+                "reference": "d4d2f0fabe8a416eb1eb7b2a4e3d52b3f2f77d61"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/1ma/DIC/zipball/d4d2f0fabe8a416eb1eb7b2a4e3d52b3f2f77d61",
+                "reference": "d4d2f0fabe8a416eb1eb7b2a4e3d52b3f2f77d61",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
+                "psr/container": "^2.0"
+            },
+            "provide": {
+                "psr/container-implementation": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.67",
+                "phpmetrics/phpmetrics": "^3.0-rc",
+                "phpunit/phpunit": "^11.5",
+                "uma/ocular": "^2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "UMA\\DIC\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A minimalistic PSR-11 container",
+            "support": {
+                "issues": "https://github.com/1ma/DIC/issues",
+                "source": "https://github.com/1ma/DIC/tree/v4.2.0"
+            },
+            "time": "2025-12-13T09:24:53+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

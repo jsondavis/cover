@@ -3,7 +3,14 @@
 
 declare(strict_types=1);
 
+use UMA\DIC\Container;
+
 require __DIR__ . '/vendor/autoload.php';
+
+if (!file_exists(__DIR__ . '/.env')) {
+  // no env found copying default
+  copy(__DIR__ . '/env.dist', __DIR__ . '/.env');
+}
 
 ## Get ENV data
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
@@ -16,6 +23,11 @@ $dotenv->required([
   'SSL_MODE'
 ]);
 
+
+// settings object to pass to DI container
+$APP_SETTINGS = [
+
+];
 
 $isDev = $_ENV['APP_ENV'] == 'dev'; 
 
