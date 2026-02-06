@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cover\Entities;
+namespace JSONDAVIS\Cover\Entities;
 
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\Common\Collections\ArrayCollection;
 
-use Cover\Entities\Shift;
+use JSONDAVIS\Cover\Entities\Shift;
 
 #[Entity]
 class Account

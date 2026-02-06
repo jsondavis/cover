@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace UMA\DoctrineDemo\DI;
+namespace JSONDAVIS\Cover\DI;
 
 use Doctrine\ORM\EntityManager;
 use Faker;
@@ -13,8 +13,8 @@ use Slim\Factory\AppFactory;
 use Slim\Middleware\ContentLengthMiddleware;
 use UMA\DIC\Container;
 use UMA\DIC\ServiceProvider;
-use UMA\DoctrineDemo\Action\CreateUser;
-use UMA\DoctrineDemo\Action\ListUsers;
+use JSONDAVIS\Cover\Actions\CreateAccount;
+use JSONDAVIS\Cover\Actions\ListAccounts;
 
 /**
  * A ServiceProvider for registering services related
@@ -28,18 +28,19 @@ final readonly class Slim implements ServiceProvider
      */
     public function provide(Container $c): void
     {
-        $c->set(ListUsers::class, static function(ContainerInterface $c): RequestHandlerInterface {
-            return new ListUsers(
+        $c->set(ListAccounts::class, static function(ContainerInterface $c): RequestHandlerInterface {
+            return new ListAccounts(
                 $c->get(EntityManager::class)
             );
         });
 
-        $c->set(CreateUser::class, static function(ContainerInterface $c): RequestHandlerInterface {
-            return new CreateUser(
+        $c->set(CreateAccount::class, static function(ContainerInterface $c): RequestHandlerInterface {
+            return new CreateAccount(
                 $c->get(EntityManager::class),
                 Faker\Factory::create()
             );
         });
+
 
         $c->set(App::class, static function (ContainerInterface $c): App {
             /** @var array $settings */
@@ -55,8 +56,9 @@ final readonly class Slim implements ServiceProvider
 
             $app->add(new ContentLengthMiddleware());
 
-            $app->get('/users', ListUsers::class);
-            $app->post('/users', CreateUser::class);
+            $app->get('/accounts', ListAccounts::class);
+            $app->post('/accounts', CreateAccount::class);
+            $app->get('/', ListAccounts::class);
 
             return $app;
         });

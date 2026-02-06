@@ -1,14 +1,17 @@
 #!/usr/bin/env php
-
 <?php
-// bin/doc
+
+declare(strict_types=1);
+
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
 use Doctrine\ORM\Tools\Console\EntityManagerProvider\SingleManagerProvider;
+use UMA\DIC\Container;
+use JSONDAVIS\Cover\DI;
 
-// db connection handled in bootstrap
-require __DIR__ . '/../bootstrap.php';
+/** @var Container $container */
+$container = require_once __DIR__ . '/../bootstrap.php';
 
-ConsoleRunner::run(
-    new SingleManagerProvider($entityMgr)
-);
+$container->register(new DI\Doctrine());
 
+ConsoleRunner::run(new SingleManagerProvider($container->get(EntityManager::class)));
