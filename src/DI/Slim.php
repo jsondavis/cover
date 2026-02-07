@@ -28,6 +28,7 @@ final readonly class Slim implements ServiceProvider
      */
     public function provide(Container $c): void
     {
+
         $c->set(ListAccounts::class, static function(ContainerInterface $c): RequestHandlerInterface {
             return new ListAccounts(
                 $c->get(EntityManager::class)
@@ -40,7 +41,6 @@ final readonly class Slim implements ServiceProvider
                 Faker\Factory::create()
             );
         });
-
 
         $c->set(App::class, static function (ContainerInterface $c): App {
             /** @var array $settings */

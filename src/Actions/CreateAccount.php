@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace JSONDAVIS\Cover\Action;
+namespace JSONDAVIS\Cover\Actions;
 
 use Doctrine\ORM\EntityManager;
 use Faker;
-use Nyholm\Psr7;
+use Slim\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -31,8 +31,16 @@ final readonly class CreateAccount implements RequestHandlerInterface
         $this->em->persist($newRandomAccount);
         $this->em->flush();
 
-        $body = Psr7\Stream::create(json_encode($newRandomAccount, JSON_PRETTY_PRINT) . PHP_EOL);
+        // $body = Psr7\Stream::create(json_encode($newRandomAccount, JSON_PRETTY_PRINT) . PHP_EOL);
+        // return new Psr7\Response(201, ['Content-Type' => 'application/json'], $body);
 
-        return new Psr7\Response(201, ['Content-Type' => 'application/json'], $body);
+        $payload = json_encode($newRandomAccount, JSON_PRETTY_PRINT) . PHP_EOL;
+
+        $response = new Response();
+        $response->getBody()->write($payload);
+
+        return $response
+           ->withHeader('Content-Type', 'application/json');
+
     }
 }
