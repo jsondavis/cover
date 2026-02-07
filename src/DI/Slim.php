@@ -15,6 +15,7 @@ use UMA\DIC\Container;
 use UMA\DIC\ServiceProvider;
 use JSONDAVIS\Cover\Actions\CreateAccount;
 use JSONDAVIS\Cover\Actions\ListAccounts;
+use JSONDAVIS\Cover\Actions\ServeHome;
 
 /**
  * A ServiceProvider for registering services related
@@ -42,6 +43,10 @@ final readonly class Slim implements ServiceProvider
             );
         });
 
+        $c->set(ServeHome::class, static function(ContainerInterface $c): RequestHandlerInterface {
+          return new ServeHome();
+        });
+
         $c->set(App::class, static function (ContainerInterface $c): App {
             /** @var array $settings */
             $settings = $c->get('settings');
@@ -58,7 +63,7 @@ final readonly class Slim implements ServiceProvider
 
             $app->get('/accounts', ListAccounts::class);
             $app->post('/accounts', CreateAccount::class);
-            $app->get('/', ListAccounts::class);
+            $app->get('/', ServeHome::class);
 
             return $app;
         });
