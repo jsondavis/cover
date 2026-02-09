@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 use JSONDAVIS\Cover\Entities\Shift;
 
@@ -76,10 +77,10 @@ class Account
   public function jsonSerialize(): array
   {
     return [
-      'account_id' => $this->account_id(),
+      'account_id' => $this->getId(),
       'name' => $this->getName(),
-      'email' => $this->email,
-      'pay_rate' => $this->pay_rate
+      'email' => $this->getEmail(),
+      'pay_rate' => $this->getRate()
     ];
   }
 }

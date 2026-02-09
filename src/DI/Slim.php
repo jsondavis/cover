@@ -24,48 +24,68 @@ use JSONDAVIS\Cover\Actions\ServeHome;
  */
 final readonly class Slim implements ServiceProvider
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function provide(Container $c): void
-    {
+  /**
+   * {@inheritdoc}
+   */
+  public function provide(Container $c): void
+  {
 
-        $c->set(ListAccounts::class, static function(ContainerInterface $c): RequestHandlerInterface {
-            return new ListAccounts(
-                $c->get(EntityManager::class)
-            );
-        });
+    // Account
+    $c->set(ListAccounts::class, static function(ContainerInterface $c): RequestHandlerInterface {
+      return new ListAccounts(
+        $c->get(EntityManager::class)
+      );
+    });
 
-        $c->set(CreateAccount::class, static function(ContainerInterface $c): RequestHandlerInterface {
-            return new CreateAccount(
-                $c->get(EntityManager::class),
-                Faker\Factory::create()
-            );
-        });
+    $c->set(CreateAccount::class, static function(ContainerInterface $c): RequestHandlerInterface {
+      return new CreateAccount(
+        $c->get(EntityManager::class),
+        Faker\Factory::create()
+      );
+    });
 
-        $c->set(ServeHome::class, static function(ContainerInterface $c): RequestHandlerInterface {
-          return new ServeHome();
-        });
+    // Shift
 
-        $c->set(App::class, static function (ContainerInterface $c): App {
-            /** @var array $settings */
-            $settings = $c->get('settings');
+    // Role
 
-            $app = AppFactory::create(null, $c);
 
-            $app->addErrorMiddleware(
-                $settings['slim']['displayErrorDetails'],
-                $settings['slim']['logErrors'],
-                $settings['slim']['logErrorDetails']
-            );
+    // HTML Template
+    $c->set(ServeHome::class, static function(ContainerInterface $c): RequestHandlerInterface {
+      return new ServeHome();
+    });
 
-            $app->add(new ContentLengthMiddleware());
+    // Slim App Config
+    $c->set(App::class, static function (ContainerInterface $c): App {
+      /** @var array $settings */
+      $settings = $c->get('settings');
 
-            $app->get('/accounts', ListAccounts::class);
-            $app->post('/accounts', CreateAccount::class);
-            $app->get('/', ServeHome::class);
+      $app = AppFactory::create(null, $c);
 
-            return $app;
-        });
-    }
+      $app->addErrorMiddleware(
+        $settings['slim']['displayErrorDetails'],
+        $settings['slim']['logErrors'],
+        $settings['slim']['logErrorDetails']
+      );
+
+      $app->add(new ContentLengthMiddleware());
+
+      // Account Routes
+      $app->get('/account', ListAccounts::class);
+      $app->post('/account', CreateAccount::class);
+
+      // Account Role Routes
+      $app->get('/role', ListAccounts::class);
+      $app->post('/role', CreateAccount::class);
+
+
+      // Shift Routes
+      $app->get('/shift', ListAccounts::class);
+      $app->post('/shift', CreateAccount::class);
+
+
+      $app->get('/', ServeHome::class);
+
+      return $app;
+    });
+  }
 }

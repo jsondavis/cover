@@ -2,7 +2,8 @@ import { Success, Failure, Command, effectPipe, runEffect } from '/js/pure-effec
 
 const baseApiUrl = 'http://localhost:8080';
 
-const makeApiCall = async (endpoint) => {
+// Utilities
+const makeGetApiCall = async (endpoint) => {
   const apiUrl = `${baseApiUrl}/${endpoint}`;
   try {
     const response = await fetch(apiUrl);
@@ -17,27 +18,59 @@ const makeApiCall = async (endpoint) => {
   }
 };
 
-// effectPipe wrapping ceremony to handle makeApiCall via Command
+// effectPipe wrapping ceremony to handle makeGetApiCall via Command
 const getData = (input) => {
-  const cmdApiCall = () => makeApiCall(input.endpoint);
+  const cmdApiCall = () => makeGetApiCall(input.endpoint);
   const next = (data) => Success(data);
   return Command(cmdApiCall, next);
 };
 
-const getUserListItemHtml = (user) => {
+const makePostApiCall = async (endpoint, postData) => {
+  const apiUrl = `${baseApiUrl}/${endpoint}`;
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      body: JSON.stringify(postData),
+    });
+
+    if (!response.ok) {
+      return Failure(response.status);
+    }
+
+    const json = await response.json();
+    return Success(json);
+  } catch (error) {
+    return Failure(error.message);
+  }
+};
+
+const postData = ({endpoint, formData}) => {
+  const cmdApiCall = () => makePostApiCall(endpoint, formData);
+  const next = (responseData) => Success(responseData);
+  return Command(cmdApiCall, next);
+};
+
+
+// \Utilities
+
+
+
+// Worker api calls and html
+const getWorkerListItemHtml = (user) => {
   return `<li>${user.name} | <span>${user.email}</span></li>`;
 };
 
 const writeWorkerPageData = (dataWrapper) => {
 
   const ul = document.querySelector('#workers ul');
-  let userList = '';
+  let workerList = '';
 
   for (let user of dataWrapper.value) {
-    userList += getUserListItemHtml(user);
+    workerList += getWorkerListItemHtml(user);
   }
 
-  ul.innerHTML = userList;
+  ul.innerHTML = workerList;
 
   return Success(dataWrapper.value);
 }
@@ -63,17 +96,18 @@ async function loadWorkerData() {
   const result = await runEffect(logic);
 
   if (result.type === 'Success') {
-    console.log('Success:', result.value);
+    console.log('Success: [loadWorkerData]', result.value);
   } 
 
   if (result.type !== 'Success') {
-    console.error('Error:', result.error);
+    console.error('Error: [loadWorkerData]', result.error);
   }
 };
 
 loadWorkerData();
 
 
+// Shifts api calls and html
 const getShiftListItemHtml = ({date, crew_start, required_roles}) => {
   let html = '<li>'
   html += `${date} | <span>${crew_start}</span>`;
@@ -122,12 +156,34 @@ async function loadShiftData() {
   const result = await runEffect(logic);
 
   if (result.type === 'Success') {
-    console.log('Success:', result.value);
+    console.log('Success: [loadShiftData]', result.value);
   } 
 
   if (result.type !== 'Success') {
-    console.error('Error:', result.error);
+    console.error('Error: [loadShiftData]', result.error);
   }
 }
 
 loadShiftData();
+
+
+// New Worker
+const makeNewWorkerFlow = (input) => effectPipe(
+  postData  
+)(input);
+
+
+async function makeNewWorker() {
+  const logic = makeNewWorkerFlow({endpoint: 'account', formData: {} });
+  const result = await runEffect(logic);
+
+  if (result.type === 'Success') {
+    console.log('Success: [makeNewWorker]', result.value);
+  } 
+
+  if (result.type !== 'Success') {
+    console.error('Error: [makeNewWorker]', result.error);
+  }
+}
+
+// makeNewWorker();

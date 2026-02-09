@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace JSONDAVIS\Cover\Actions;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query;
 use Slim\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -26,9 +27,13 @@ final readonly class ListAccounts implements RequestHandlerInterface
         /** @var Account[] $accounts */
         $accounts = $this->em
             ->getRepository(Account::class)
-            ->findAll();
+            ->findAll(Query::HYDRATE_ARRAY);
 
-        $payload = json_encode(['accounts' => $accounts], JSON_PRETTY_PRINT) . PHP_EOL;
+        $serial = array_map(function($a) {
+          return $a->jsonSerialize();
+        }, $accounts);
+
+        $payload = json_encode($serial, JSON_PRETTY_PRINT) . PHP_EOL;
 
         $response = new Response();
         $response->getBody()->write($payload);
