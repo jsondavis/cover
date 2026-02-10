@@ -15,6 +15,11 @@ use UMA\DIC\Container;
 use UMA\DIC\ServiceProvider;
 use JSONDAVIS\Cover\Actions\CreateAccount;
 use JSONDAVIS\Cover\Actions\ListAccounts;
+// use JSONDAVIS\Cover\Actions\CreateShift;
+use JSONDAVIS\Cover\Actions\ListShifts;
+// use JSONDAVIS\Cover\Actions\CreateRole;
+// use JSONDAVIS\Cover\Actions\ListRoles;
+
 use JSONDAVIS\Cover\Actions\ServeHome;
 
 /**
@@ -45,9 +50,27 @@ final readonly class Slim implements ServiceProvider
     });
 
     // Shift
+    $c->set(ListShifts::class, static function(ContainerInterface $c): RequestHandlerInterface {
+      return new ListShifts(
+        $c->get(EntityManager::class)
+      );
+    });
+
+    // $c->set(CreateShift::class, static function(ContainerInterface $c): RequestHandlerInterface {
+    //   return new CreateShift(
+    //     $c->get(EntityManager::class),
+    //     Faker\Factory::create()
+    //   );
+    // });
 
     // Role
 
+    // $c->set(CreateShift::class, static function(ContainerInterface $c): RequestHandlerInterface {
+    //   return new CreateShift(
+    //     $c->get(EntityManager::class),
+    //     Faker\Factory::create()
+    //   );
+    // });
 
     // HTML Template
     $c->set(ServeHome::class, static function(ContainerInterface $c): RequestHandlerInterface {
@@ -75,11 +98,13 @@ final readonly class Slim implements ServiceProvider
 
       // Account Role Routes
       $app->get('/role', ListAccounts::class);
-      $app->post('/role', CreateAccount::class);
-
+      // roles probably should be static 
+      // to begin with? 
+      // it's not like they change that often
+      // $app->post('/role', CreateAccount::class);
 
       // Shift Routes
-      $app->get('/shift', ListAccounts::class);
+      $app->get('/shift', ListShifts::class);
       $app->post('/shift', CreateAccount::class);
 
 

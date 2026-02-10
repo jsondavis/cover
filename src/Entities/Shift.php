@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cover\Entities;
+namespace JSONDAVIS\Cover\Entities;
 
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\DBAL\Types\Types;
 
-use Cover\Entities\Account;
+use JSONDAVIS\Cover\Entities\Account;
 
 enum Status: string {
   case Open = 'O';
