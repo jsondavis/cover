@@ -1,42 +1,10 @@
-# Slim Framework 4 Skeleton Application
+# Cover
 
-[![Coverage Status](https://coveralls.io/repos/github/slimphp/Slim-Skeleton/badge.svg?branch=master)](https://coveralls.io/github/slimphp/Slim-Skeleton?branch=master)
+Goal is to allow a team of users to claim shifts. The ideal setup will give the most senior crew members first call for the shifts or default to the most senior members unless they want to pass it off for tothers to pickup.  The Role portion of the app would ensure that designated roles are filled on the crew by someone who meets the minimum requirements for that role.  Later features could involve weighting based on other factors like other claimed shifts within the week, a manager or client preference.
 
-Use this skeleton application to quickly setup and start working on a new Slim Framework 4 application. This application uses the latest Slim 4 with Slim PSR-7 implementation and PHP-DI container implementation. It also uses the Monolog logger.
 
-This skeleton application was built for Composer. This makes setting up a new Slim Framework application quick and easy.
+## Reasoning behind design decisions
+I started this project as a reintroduction to php for myself. I've been almost exclusively using JS or Golang as my backend language of choice for the past 4-5 years. Also I figured I'd throw together something _without_ using an LLM. I'll circle back and iterate on things if it ends up being useful as anything other than a toy app.
 
-## Install the Application
 
-Run this command from the directory in which you want to install your new Slim Framework application. You will require PHP 7.4 or newer.
 
-```bash
-composer create-project slim/slim-skeleton [my-app-name]
-```
-
-Replace `[my-app-name]` with the desired directory name for your new application. You'll want to:
-
-* Point your virtual host document root to your new application's `public/` directory.
-* Ensure `logs/` is web writable.
-
-To run the application in development, you can run these commands 
-
-```bash
-cd [my-app-name]
-composer start
-```
-
-Or you can use `docker-compose` to run the app with `docker`, so you can run these commands:
-```bash
-cd [my-app-name]
-docker-compose up -d
-```
-After that, open `http://localhost:8080` in your browser.
-
-Run this command in the application directory to run the test suite
-
-```bash
-composer test
-```
-
-That's it! Now go build something cool.
