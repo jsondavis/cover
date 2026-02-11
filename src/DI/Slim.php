@@ -18,7 +18,7 @@ use JSONDAVIS\Cover\Actions\ListAccounts;
 // use JSONDAVIS\Cover\Actions\CreateShift;
 use JSONDAVIS\Cover\Actions\ListShifts;
 // use JSONDAVIS\Cover\Actions\CreateRole;
-// use JSONDAVIS\Cover\Actions\ListRoles;
+use JSONDAVIS\Cover\Actions\ListRoles;
 
 use JSONDAVIS\Cover\Actions\ServeHome;
 
@@ -64,6 +64,11 @@ final readonly class Slim implements ServiceProvider
     // });
 
     // Role
+    $c->set(ListRoles::class, static function(ContainerInterface $c): RequestHandlerInterface {
+      return new ListRoles(
+        $c->get(EntityManager::class)
+      );
+    });
 
     // $c->set(CreateShift::class, static function(ContainerInterface $c): RequestHandlerInterface {
     //   return new CreateShift(
@@ -97,7 +102,7 @@ final readonly class Slim implements ServiceProvider
       $app->post('/account', CreateAccount::class);
 
       // Account Role Routes
-      $app->get('/role', ListAccounts::class);
+      $app->get('/role', ListRoles::class);
       // roles probably should be static 
       // to begin with? 
       // it's not like they change that often
