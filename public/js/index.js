@@ -1,4 +1,5 @@
 import { Success, Failure, Command, effectPipe, runEffect } from '/js/pure-effect.js';
+import '/js/mithril.js';
 
 const baseApiUrl = 'http://localhost:8080';
 

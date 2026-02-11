@@ -42,6 +42,8 @@
       </div>
     </div>
 
+
+    <script type="script" src="/js/mithril.js"></script>
     <script type="module" src="/js/index.js"></script>
   </body>
 </html>
