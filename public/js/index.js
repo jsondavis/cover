@@ -1,6 +1,7 @@
 import { Success, Failure, Command, effectPipe, runEffect } from '/js/pure-effect.js';
 import '/js/mithril.js';
 
+const docRoot = document.getElementById('container');
 const baseApiUrl = 'http://localhost:8080';
 
 // Utilities
@@ -187,4 +188,19 @@ async function makeNewWorker() {
   }
 }
 
-// makeNewWorker();
+
+function AddWorkerComponent() {
+  const attrs = {
+    onclick: () => {
+      makeNewWorker();
+    }
+  }
+  
+  return {
+    view() {
+      return m('button', attrs, 'click to add worker');
+    }
+  }
+}
+
+m.mount(docRoot, AddWorkerComponent);

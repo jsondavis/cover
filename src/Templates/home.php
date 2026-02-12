@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
   </head>
   <body>
-    <div class="container">
+    <div id="container" class="container">
       <div id="shifts" class="container">
         <h2>Shifts</h2>
         <hr />
