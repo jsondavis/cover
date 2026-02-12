@@ -106,7 +106,7 @@ async function loadWorkerData() {
   }
 };
 
-loadWorkerData();
+// loadWorkerData();
 
 
 // Shifts api calls and html
@@ -166,7 +166,7 @@ async function loadShiftData() {
   }
 }
 
-loadShiftData();
+// loadShiftData();
 
 
 // New Worker
