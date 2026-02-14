@@ -66,6 +66,11 @@ const getWorkerListItemHtml = (user) => {
 const writeWorkerPageData = (dataWrapper) => {
 
   const ul = document.querySelector('#workers ul');
+
+  if (!ul) {
+    return Failure('[writeWorkerPageData] workers ul not found')
+  }
+
   let workerList = '';
 
   for (let user of dataWrapper.value) {
