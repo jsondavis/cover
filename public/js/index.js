@@ -60,7 +60,10 @@ const postData = ({endpoint, formData}) => {
 
 // Worker api calls and html
 const getWorkerListItemHtml = (user) => {
-  return `<li>${user.name} | <span>${user.email}</span></li>`;
+  return m('li', [
+    m('span', `${user.name} | `),
+    m('span', `${user.email}`),
+  ]);
 };
 
 const writeWorkerPageData = (dataWrapper) => {
@@ -201,11 +204,43 @@ function AddWorkerComponent() {
     }
   }
   
+  return m('button', attrs, 'click to add worker');
+}
+
+function Shift(data) {
+  return m('li', [
+    m('span', 'Monday Jan 26 (9am - 2pm) | '),
+    m('span', '1 lead'),
+    m('span', '1 helper')
+  ]);
+}
+
+function Shifts(data) {
+  return m('ul', 
+    data.shifts.map(Shift)
+  );
+}
+
+function ShiftsSection(shiftData) {
+  return m('#shifts.container', [
+    m('h2', 'Shifts'),
+    m('hr'),
+    Shifts(shiftData),
+  ]);
+}
+
+function HomeComponent() {
   return {
     view() {
-      return m('button', attrs, 'click to add worker');
+      return m('#container.container', [
+        ShiftsSection({shifts: ['']}),
+        m('hr'),
+        m('.container', [
+          AddWorkerComponent()
+        ])
+      ]);
     }
   }
 }
 
-m.mount(docRoot, AddWorkerComponent);
+m.mount(docRoot, HomeComponent);
