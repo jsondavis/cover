@@ -1,5 +1,8 @@
-import { Success, Failure, Command, effectPipe, runEffect } from '/js/util/pure-effect.js';
-import '/js/mithril/mithril.js';
+import { Success, Failure, Command, effectPipe, runEffect } from '/js/pure-effect.js';
+import '/js/mithril.js';
+
+const docRoot = document.getElementById('container');
+const baseApiUrl = 'http://localhost:8080';
 
 // Utilities
 const makeGetApiCall = async (endpoint) => {
@@ -11,8 +14,7 @@ const makeGetApiCall = async (endpoint) => {
     }
 
     const json = await response.json();
-    // return Success(json);
-    return json;
+    return Success(json);
   } catch (error) {
     return Failure(error.message);
   }
@@ -53,111 +55,6 @@ const postData = ({endpoint, formData}) => {
 
 
 // \Utilities
-
-// App Specific 
-const docRoot = document.getElementById('container');
-const baseApiUrl = 'http://localhost:8080';
-
-const State = () => ({ 
-  initialLoad: false, // debounce loading ... maybe check for empty or last load?
-  shifts: [],
-  accounts: [],
-  errors: {
-    shifts: {
-      message: '',
-    },
-    accounts: {
-      message: '',
-    },
-  }
-});
-
-const Actions = state => ({
-  getShifts: async () => {
-    const getShiftsDataFlow = (input) => effectPipe(
-      getData,
-    )(input);
-
-    const logic = getShiftDataFlow({ endpoint: 'shift' });
-    const result = await runEffect(logic);
-    console.log('shifts: ', result);
-
-    if (result.type !== 'Success') {
-      // set error status
-      state.errors.shifts = result.value;
-    }
-    
-    if (result.type === 'Success') {
-      state.shifts = result.value;
-    }
-
-    m.redraw();
-  },
-  getAccounts: async () => {
-    const getUserDataFlow = (input) => effectPipe(
-      getData,
-    )(input);
-
-    const logic = getUserDataFlow({ endpoint: 'account' });
-    const result = await runEffect(logic);
-
-    console.log('accounts: ', result);
-
-    if (result.type !== 'Success') {
-      // set error status
-      state.errors.accounts = result.value;
-    }
-    
-    if (result.type === 'Success') {
-      state.accounts = result.value;
-    }
-
-    m.redraw();
-  },
-  addAccount: () => {
-    console.log('add account');
-  },
-  loadDisplayData: async () => {
-    state.initialLoad = true;
-
-    // Getting Accounts
-    const getUserDataFlow = (input) => effectPipe(
-      getData,
-    )(input);
-
-    const userDataLogic = getUserDataFlow({ endpoint: 'account' });
-    const userDataResult = await runEffect(userDataLogic);
-
-    if (userDataResult.type !== 'Success') {
-      // set error status
-      state.errors.accounts = userDataResult.value;
-    }
-    
-    if (userDataResult.type === 'Success') {
-      state.accounts = userDataResult.value;
-    }
-
-
-    // Getting Shifts
-    const getShiftsDataFlow = (input) => effectPipe(
-      getData,
-    )(input);
-
-    const shiftDataLogic = getShiftDataFlow({ endpoint: 'shift' });
-    const shiftDataResult = await runEffect(shiftDataLogic);
-
-    if (shiftDataResult.type !== 'Success') {
-      // set error status
-      state.errors.shifts = shiftDataResult.value;
-    }
-    
-    if (shiftDataResult.type === 'Success') {
-      state.shifts = shiftDataResult.value;
-    }
-
-     m.redraw();
-  }
-});
 
 
 
@@ -300,15 +197,16 @@ async function makeNewWorker() {
 }
 
 
-function AddWorkerComponent(addAccount) {
+function AddWorkerComponent() {
   const attrs = {
-    onclick: addAccount
+    onclick: () => {
+      makeNewWorker();
+    }
   }
   
   return m('button', attrs, 'click to add worker');
 }
 
-// Shifts
 function Shift(data) {
   return m('li', [
     m('span', 'Monday Jan 26 (9am - 2pm) | '),
@@ -317,9 +215,9 @@ function Shift(data) {
   ]);
 }
 
-function Shifts(shifts) {
+function Shifts(data) {
   return m('ul', 
-    shifts.map(Shift)
+    data.shifts.map(Shift)
   );
 }
 
@@ -331,52 +229,18 @@ function ShiftsSection(shiftData) {
   ]);
 }
 
-// Accounts
-function Account({ name, email, id }) {
-  return m('li', [
-    m(`span#${id}`, `${name} - ${email}`),
-  ]);
-}
-
-function Accounts(accounts) {
-  return m('ul', 
-    accounts.map(Account)
-  );
-}
-
-function AccountsSection(accountData) {
-  return m('#users.container', [
-    m('h2', 'Users'),
-    m('hr'),
-    Accounts(accountData),
-  ]);
-}
-
-function HomeComponent(state, actions) {
-  console.log('state change: ', state);
-
-  if (!state.initialLoad) {
-    actions.loadDisplayData();
-  }
-
-  return m('#container.container', [
-      AccountsSection(state.accounts),
-      m('hr'),
-      m('br'),
-      ShiftsSection(state.shifts),
-      m('hr'),
-      m('.container', [
-        AddWorkerComponent(actions.addAccount)
-      ])
-    ]);
-}
-
-// m.mount(docRoot, HomeComponent);
-m.mount(docRoot, () => {
-  const state = State();
-  const actions = Actions(state);
-
+function HomeComponent() {
   return {
-    view: () => HomeComponent(state, actions)
-  };
-});
+    view() {
+      return m('#container.container', [
+        ShiftsSection({shifts: ['']}),
+        m('hr'),
+        m('.container', [
+          AddWorkerComponent()
+        ])
+      ]);
+    }
+  }
+}
+
+m.mount(docRoot, HomeComponent);
