@@ -15,7 +15,7 @@ use UMA\DIC\Container;
 use UMA\DIC\ServiceProvider;
 use JSONDAVIS\Cover\Actions\CreateAccount;
 use JSONDAVIS\Cover\Actions\ListAccounts;
-// use JSONDAVIS\Cover\Actions\CreateShift;
+use JSONDAVIS\Cover\Actions\CreateShift;
 use JSONDAVIS\Cover\Actions\ListShifts;
 // use JSONDAVIS\Cover\Actions\CreateRole;
 use JSONDAVIS\Cover\Actions\ListRoles;
@@ -56,12 +56,12 @@ final readonly class Slim implements ServiceProvider
       );
     });
 
-    // $c->set(CreateShift::class, static function(ContainerInterface $c): RequestHandlerInterface {
-    //   return new CreateShift(
-    //     $c->get(EntityManager::class),
-    //     Faker\Factory::create()
-    //   );
-    // });
+    $c->set(CreateShift::class, static function(ContainerInterface $c): RequestHandlerInterface {
+      return new CreateShift(
+        $c->get(EntityManager::class),
+        Faker\Factory::create()
+      );
+    });
 
     // Role
     $c->set(ListRoles::class, static function(ContainerInterface $c): RequestHandlerInterface {
@@ -110,7 +110,7 @@ final readonly class Slim implements ServiceProvider
 
       // Shift Routes
       $app->get('/shift', ListShifts::class);
-      $app->post('/shift', CreateAccount::class);
+      $app->post('/shift', CreateShift::class);
 
 
       $app->get('/', ServeHome::class);

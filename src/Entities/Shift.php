@@ -58,6 +58,15 @@ class Shift
     return $this->shift_id;
   }
   
+  public function getStart(): string 
+  {
+    return $this->start_time;
+  }
+
+  public function getEnd(): string 
+  {
+    return $this->end_time;
+  }
   
   /**
    * {@inheritdoc}
@@ -65,7 +74,9 @@ class Shift
   public function jsonSerialize(): array
   {
     return [
-      'shift_id' => $this->getId()
+      'shift_id' => $this->getId(),
+      'start' => $this->getStart(),
+      'end' => $this->getEnd(),
     ];
   }
 }
